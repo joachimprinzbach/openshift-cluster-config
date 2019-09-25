@@ -1,0 +1,23 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    haproxy.router.openshift.io/timeout: 10m
+  labels:
+    app: shelf
+  name: shelf
+spec:
+  path: /
+  port:
+    targetPort: http
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: shelf
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+    - routerName: router
